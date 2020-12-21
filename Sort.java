@@ -1,7 +1,4 @@
 // Sort algorithms
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Sort
 {
 	public static <T extends Comparable<T>> void selectionSort(T[] data)
@@ -169,6 +166,8 @@ public class Sort
 		for (int i = 0; i <= end - start; i++)
 			data[start + i] = temp[i];
 	}
+
+
 	// swap element and target in the array
 	private static <T extends Comparable<T>> void swap(T[] data, int element1, int element2)
 	{

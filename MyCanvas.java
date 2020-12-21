@@ -1,15 +1,15 @@
 import java.awt.Canvas;
 import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
 
 public class MyCanvas extends Canvas {
 	public static final long serialVersionUID = 2L;
 
-	private Visualizer drawer;
+	private VisualizerProvider listener;
 
-	public MyCanvas()
+	public MyCanvas(VisualizerProvider listener)
 	{
 		super();
+		this.listener = listener;
 	}
 
     public void paint(Graphics g)
@@ -17,8 +17,7 @@ public class MyCanvas extends Canvas {
         super.paint(g);
 		clear(g);
 
-		if (drawer != null)
-			drawer.drawArray();
+		listener.onDrawArray();
     }
 
 
@@ -29,5 +28,8 @@ public class MyCanvas extends Canvas {
 	}
 
 
-	public void setVisualizer(Visualizer drawer) { this.drawer = drawer; }
+	public interface VisualizerProvider
+	{
+		void onDrawArray();
+	}
 }

@@ -21,15 +21,13 @@ public class Visualizer
 
 	private Color originalColor, swappingColor, comparingColor;
 
-	private MyCanvas canvas;
 	private BufferStrategy bs;
 	private Graphics g;
 
 	private SortedListener listener;
 
-	public Visualizer(MyCanvas canvas, int capacity, int fps, SortedListener listener)
+	public Visualizer(int capacity, int fps, SortedListener listener)
 	{
-		this.canvas = canvas;
 		this.capacity = capacity;
 		this.speed = (int) (1000.0/fps);
 		this.listener = listener;
@@ -39,18 +37,13 @@ public class Visualizer
 		comparingColor = Color.YELLOW;
 		swappingColor = ColorManager.BAR_RED;
 
-		bs = canvas.getBufferStrategy();
-		if (bs == null)
-		{
-			canvas.createBufferStrategy(2);
-			bs = canvas.getBufferStrategy();
-		}
+		bs = listener.getBufferStrategy();
 
 		hasArray = false;
 	}
 
 
-	public void createRandomArray()
+	public void createRandomArray(int canvasWidth, int canvasHeight)
 	{
 		array = new Integer[capacity];
 		bars = new Bar[capacity];
@@ -58,14 +51,15 @@ public class Visualizer
 
 		// initial position
 		double x = PADDING;
-		int y = canvas.getHeight() - PADDING;
+		int y = canvasHeight- PADDING;
 
 		// width of all bars
-		double width = (double) (canvas.getWidth() - PADDING*2) / capacity;
+		double width = (double) (canvasWidth - PADDING*2) / capacity;
 
 		// get graphics
         g = bs.getDrawGraphics();
-		canvas.clear(g);
+		g.setColor(ColorManager.CANVAS_BACKGROUND);
+		g.fillRect(0, 0, canvasWidth, canvasHeight);
 
 		Random rand = new Random();
 		int value;
@@ -580,5 +574,6 @@ public class Visualizer
 	public interface SortedListener
 	{
 		void onArraySorted(long elapsedTime, int comparison, int swapping);
+		BufferStrategy getBufferStrategy();
 	}
 }

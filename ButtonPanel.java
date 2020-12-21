@@ -9,12 +9,14 @@ public class ButtonPanel extends JPanel
 	public static final long serialVersionUID = 1L;
 	private static final int BUTTON_WIDTH = 200, BUTTON_HEIGHT = 80;
 	private JLabel[] buttons;
-	private Visualizer visualizer;
+	private SortButtonListener listener;
 	private int number = 6;
 
-	public ButtonPanel()
+	public ButtonPanel(SortButtonListener listener)
 	{
 		super();
+
+		this.listener = listener;
 
 		buttons = new JLabel[number];
 		for (int i = 0; i < buttons.length; i++)
@@ -56,41 +58,15 @@ public class ButtonPanel extends JPanel
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				buttonClicked(id);
+				listener.sortButtonClicked(id);
 				button.setIcon(new ImageIcon(String.format("buttons/%s_entered.png", name)));
 			}
 		});
 	}
 
 
-	private void buttonClicked(int id)
+	public interface SortButtonListener
 	{
-		switch (id)
-		{
-			case 0:  // create button
-				visualizer.createRandomArray();
-				break;
-			case 1:  // bubble button
-				visualizer.bubbleSort();
-				break;
-			case 2:  // selection button
-				visualizer.selectionSort();
-				break;
-			case 3:  // insertion button
-				visualizer.insertionSort();
-				break;
-			case 4:  // quick button
-				visualizer.quickSort();
-				break;
-			case 5:  // merge button
-				visualizer.mergeSort();
-				break;
-
-		}
-	}
-
-
-	public void setVisualizer(Visualizer visualizer) {
-		this.visualizer = visualizer;
+		void sortButtonClicked(int id);
 	}
 }

@@ -12,13 +12,16 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.image.BufferStrategy;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 import java.text.NumberFormat;
 
-public class MainFrame extends JFrame implements PropertyChangeListener, ChangeListener, Visualizer.SortedListener
+public class MainFrame extends JFrame implements PropertyChangeListener,
+	   ChangeListener, Visualizer.SortedListener,
+	   ButtonPanel.SortButtonListener, MyCanvas.VisualizerProvider
 {
 	public static final long serialVersionUID = 10L;
 
@@ -65,13 +68,13 @@ public class MainFrame extends JFrame implements PropertyChangeListener, ChangeL
 		add(mainPanel);
 
 		// add buttons panel
-		buttonPanel = new ButtonPanel();
+		buttonPanel = new ButtonPanel(this);
 		buttonPanel.setBounds(0, 150, 250, HEIGHT);
 		buttonPanel.setBackground(ColorManager.BACKGROUND);
 		mainPanel.add(buttonPanel);
 
 		// add canvas
-		canvas = new MyCanvas();
+		canvas = new MyCanvas(this);
 		int cWidth = WIDTH - 250 - 10;
 		int cHeight = HEIGHT - 80;
 		canvas.setFocusable(false);
@@ -84,11 +87,8 @@ public class MainFrame extends JFrame implements PropertyChangeListener, ChangeL
 
 
 		// sorting visualizer
-		visualizer = new Visualizer(canvas, CAPACITY, FPS, this);
-		visualizer.createRandomArray();
-		canvas.setVisualizer(visualizer);
-		buttonPanel.setVisualizer(visualizer);
-
+		visualizer = new Visualizer(CAPACITY, FPS, this);
+		visualizer.createRandomArray(canvas.getWidth(), canvas.getHeight());
 
 		// create an input field for capacity
 		// labels
@@ -182,8 +182,8 @@ public class MainFrame extends JFrame implements PropertyChangeListener, ChangeL
 		mainPanel.add(inforPanel);
 	}
 
-	public Visualizer getVisualizer() { return visualizer; }
 
+	/* IMPLEMENTED METHODS */
 
 	// the capacity is changed
 	public void propertyChange(PropertyChangeEvent e)
@@ -205,11 +205,60 @@ public class MainFrame extends JFrame implements PropertyChangeListener, ChangeL
 	}
 
 
+	// button clicked
+	public void sortButtonClicked(int id)
+	{
+		switch (id)
+		{
+			case 0:  // create button
+				visualizer.createRandomArray(canvas.getWidth(), canvas.getHeight());
+				break;
+			case 1:  // bubble button
+				visualizer.bubbleSort();
+				break;
+			case 2:  // selection button
+				visualizer.selectionSort();
+				break;
+			case 3:  // insertion button
+				visualizer.insertionSort();
+				break;
+			case 4:  // quick button
+				visualizer.quickSort();
+				break;
+			case 5:  // merge button
+				visualizer.mergeSort();
+				break;
+		}
+	}
+
+
+	// draw the array
+	public void onDrawArray()
+	{
+		if (visualizer != null)
+			visualizer.drawArray();
+	}
+
+
 	// showing statistics when sorting is completed
 	public void onArraySorted(long elapsedTime, int comp, int swapping)
 	{
 		timeLabel.setText("Elapsed Time: " + (int)(elapsedTime/1000.0) + " µs");
 		compLabel.setText("Comparisons: " + comp);
 		swapLabel.setText("Swaps: " + swapping);
+	}
+
+
+	// return the graphics for drawing
+	public BufferStrategy getBufferStrategy()
+	{
+		BufferStrategy bs = canvas.getBufferStrategy();
+		if (bs == null)
+		{
+			canvas.createBufferStrategy(2);
+			bs = canvas.getBufferStrategy();
+		}
+
+		return bs;
 	}
 }
