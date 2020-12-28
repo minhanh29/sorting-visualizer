@@ -90,6 +90,7 @@ public class MainFrame extends JFrame implements PropertyChangeListener,
 		visualizer = new Visualizer(CAPACITY, FPS, this);
 		visualizer.createRandomArray(canvas.getWidth(), canvas.getHeight());
 
+
 		// create an input field for capacity
 		// labels
 		capacityLabel = new JLabel("Capacity");
