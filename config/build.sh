@@ -18,5 +18,3 @@ javapackager \
   -nosign \
   -v
 
-echo ""
-echo "If that succeeded, it created \"release/bundles/${APP_DIR_NAME}\""
