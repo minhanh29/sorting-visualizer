@@ -1,13 +1,16 @@
 # Sorting Visualizer
 Author: *Minh Anh Nguyen*  
 A GUI application created by Java Swing to visualizing sorting algorithms.
-1. Bubble Sortt
+*1. Bubble Sortt
 2. Selection Sort
 3. Insertion Sort
 4. Quick Sort
-5. Merge Sort
+5. Merge Sort*
 
-<img src="screenshots/visualizing.png" alt="visualizing algorithm" width=500 />
+See full implementation and installation video here:  
+https://youtu.be/o7TyVt4QWAw
+
+<img src="screenshots/visualizing.png" alt="visualizing algorithm" width=800 />
 
 ## Installation
 Copy all the files in the "config" folder to the root project or run this command  
@@ -16,7 +19,7 @@ Copy all the files in the "config" folder to the root project or run this comman
 ditto config .
 ```
 
-### Opttion 1
+### Option 1
 Execute the Runner.sh script to compile and run the program
 
 ```
@@ -27,7 +30,7 @@ Execute the Runner.sh script to compile and run the program
 Open the MyVisualizer.jar directly by double-clicking on it.
 
 ### Option 3
-Build the app by running tthe build.sh script
+Build the app by running the build.sh script
 
 ```
 ./build.sh
