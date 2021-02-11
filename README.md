@@ -1,6 +1,7 @@
 # Sorting Visualizer
 Author: *Minh Anh Nguyen*  
-A GUI application created by Java Swing to visualizing sorting algorithms.
+A GUI application created by Java Swing to visualizing sorting algorithms.  
+
 *1. Bubble Sort*  
 *2. Selection Sort*  
 *3. Insertion Sort*  
